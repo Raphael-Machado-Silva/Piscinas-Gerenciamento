@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog
 
 # Função para calcular a quantidade de cloro
 def calcular_cloro(volume):
@@ -50,7 +51,7 @@ def calcular():
         # Verificar se há pó no fundo da piscina
         if checkbox_pó.get() == 1:
             recomendacao_pó = (
-                "Há pó no fundo da piscina. Recomenda-se o seguinte procedimento:\n"
+                "\nHá pó no fundo da piscina. Recomenda-se o seguinte procedimento:\n"
                 "1. **Aplicar o floculante:** Adicione a quantidade recomendada de floculante de acordo com o volume de água da piscina.\n"
                 "2. **Aguarde 6 a 12 horas:** Deixe a piscina em repouso durante esse tempo para que as partículas em suspensão se aglomerem e sedimentem no fundo.\n"
                 "3. **Aspiração:** Após o período de repouso, aspire cuidadosamente o fundo da piscina para remover os flocos que se formaram. Evite agitar a água durante a aspiração para não levantar novamente as partículas."
@@ -87,10 +88,19 @@ def on_enter(e):
 def on_leave(e):
     e.widget.config(bg='#005f7f', fg='white')
 
+# Função para salvar o resumo em um arquivo de texto
+def salvar_resumo():
+    resumo = text_resultado.get(1.0, tk.END).strip()
+    if resumo:
+        file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text files", "*.txt"), ("All files", "*.*")])
+        if file_path:
+            with open(file_path, 'w') as file:
+                file.write(resumo)
+
 # Criando a janela principal
 janela = tk.Tk()
 janela.title("Calculadora de Produtos Químicos para Piscinas")
-janela.geometry("1200x600")  # Define o tamanho da janela
+janela.geometry("1200x700")  # Atualizando a altura da janela para 700px
 janela.resizable(False, False)  # Impede a mudança de tamanho da janela
 
 # Definir o fundo da janela
@@ -109,7 +119,7 @@ titulo = tk.Label(janela, text="Calculadora de Gerenciamento de Piscina", bg='li
 titulo.pack(pady=(20, 10))  # Espaço acima e abaixo do título
 
 # Frame para centralizar o conteúdo
-frame_principal = tk.Frame(janela, bg='lightblue')
+frame_principal = tk.Frame(janela, bg='lightblue', width=1200, height=700)  # Atualizando a altura do frame
 frame_principal.place(relx=0.5, rely=0.5, anchor='center')
 
 # Labels
@@ -147,9 +157,16 @@ botao_limpar.bind("<Enter>", on_enter)
 botao_limpar.bind("<Leave>", on_leave)
 botao_limpar.config(command=limpar)
 
+# Botão para salvar o resumo
+botao_salvar = tk.Button(frame_principal, text="Baixar Resumo", bg='#005f7f', fg='white', font=("Arial", 12, "bold"))
+botao_salvar.grid(row=4, column=2, padx=10, pady=10)
+botao_salvar.bind("<Enter>", on_enter)
+botao_salvar.bind("<Leave>", on_leave)
+botao_salvar.config(command=salvar_resumo)
+
 # Widget Text para exibir os resultados
-text_resultado = tk.Text(frame_principal, height=15, width=100, wrap='word', bg='white', fg='black', font=("Arial", 12))
-text_resultado.grid(row=5, columnspan=2, padx=10, pady=10)
+text_resultado = tk.Text(frame_principal, height=15, width=80, wrap='word', bg='white', fg='black', font=("Arial", 12))
+text_resultado.grid(row=5, columnspan=3, padx=20, pady=10, sticky="n")
 
 # Iniciar o loop principal da janela
 janela.mainloop()
