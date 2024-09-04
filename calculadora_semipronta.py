@@ -143,30 +143,34 @@ checkbox_pó = tk.IntVar()
 checkbox_pó_botao = tk.Checkbutton(frame_principal, text="Piscina com pó no fundo?", variable=checkbox_pó, bg='lightblue', fg='black', font=("Arial", 12, "bold"))
 checkbox_pó_botao.grid(row=3, columnspan=2, padx=10, pady=10, sticky="w")
 
+# Frame para centralizar os botões
+frame_botoes = tk.Frame(frame_principal, bg='lightblue')
+frame_botoes.grid(row=4, columnspan=2, pady=10)
+
 # Botão para realizar o cálculo
-botao_calcular = tk.Button(frame_principal, text="Calcular", bg='#005f7f', fg='white', font=("Arial", 12, "bold"))
-botao_calcular.grid(row=4, column=0, padx=10, pady=10)
+botao_calcular = tk.Button(frame_botoes, text="Calcular", bg='#005f7f', fg='white', font=("Arial", 12, "bold"))
+botao_calcular.grid(row=0, column=0, padx=10)
 botao_calcular.bind("<Enter>", on_enter)
 botao_calcular.bind("<Leave>", on_leave)
 botao_calcular.config(command=calcular)
 
 # Botão para limpar os campos
-botao_limpar = tk.Button(frame_principal, text="Limpar", bg='#005f7f', fg='white', font=("Arial", 12, "bold"))
-botao_limpar.grid(row=4, column=1, padx=10, pady=10)
+botao_limpar = tk.Button(frame_botoes, text="Limpar", bg='#005f7f', fg='white', font=("Arial", 12, "bold"))
+botao_limpar.grid(row=0, column=1, padx=10)
 botao_limpar.bind("<Enter>", on_enter)
 botao_limpar.bind("<Leave>", on_leave)
 botao_limpar.config(command=limpar)
 
 # Botão para salvar o resumo
-botao_salvar = tk.Button(frame_principal, text="Baixar Resumo", bg='#005f7f', fg='white', font=("Arial", 12, "bold"))
-botao_salvar.grid(row=4, column=2, padx=10, pady=10)
+botao_salvar = tk.Button(frame_botoes, text="Baixar Resumo", bg='#005f7f', fg='white', font=("Arial", 12, "bold"))
+botao_salvar.grid(row=0, column=2, padx=10)
 botao_salvar.bind("<Enter>", on_enter)
 botao_salvar.bind("<Leave>", on_leave)
 botao_salvar.config(command=salvar_resumo)
 
 # Widget Text para exibir os resultados
 text_resultado = tk.Text(frame_principal, height=15, width=80, wrap='word', bg='white', fg='black', font=("Arial", 12))
-text_resultado.grid(row=5, columnspan=3, padx=20, pady=10, sticky="n")
+text_resultado.grid(row=5, columnspan=2, padx=20, pady=10, sticky="n")
 
 # Iniciar o loop principal da janela
 janela.mainloop()
